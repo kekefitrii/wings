@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_list"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_margin="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:src="@drawable/ic_account" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/item_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="sans-serif"
+        android:textAlignment="textStart"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_list"
+        app:layout_constraintTop_toTopOf="@+id/iv_list"
+        tools:text="ID" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/item_price2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/strike"
+        android:fontFamily="sans-serif"
+        android:textAlignment="textStart"
+        android:textColor="@color/grey"
+        android:textSize="11sp"
+        app:layout_constraintStart_toEndOf="@+id/iv_list"
+        app:layout_constraintTop_toBottomOf="@+id/item_name"
+        tools:text="Rp 11.000,-" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/item_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="5dp"
+        android:fontFamily="sans-serif"
+        android:textAlignment="textStart"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_list"
+        app:layout_constraintStart_toEndOf="@+id/iv_list"
+        app:layout_constraintTop_toBottomOf="@+id/item_price2"
+        tools:text="Rp 10.000,-" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bt_buy"
+        android:background="@drawable/bt_rectangle_blue_bg"
+        android:layout_marginEnd="16dp"
+        android:clickable="true"
+        android:text="Buy"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/item_name"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
