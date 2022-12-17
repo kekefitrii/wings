@@ -22,9 +22,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ike.wingsshop.CheckoutOrder.Checkout;
 import com.ike.wingsshop.Database.orderContract;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 
 public class MainActivity_Detail extends AppCompatActivity implements View.OnClickListener, LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -33,6 +35,7 @@ public class MainActivity_Detail extends AppCompatActivity implements View.OnCli
     TextView name_detail, tv_price, tv_dimention, quantity_number, total_price_detail;
     int quantity;
     Button bt_buy;
+    ArrayList<Checkout> items2 = new ArrayList<>();
     public Uri mCurrentCartUri;
     boolean hasAllRequiredValues = false;
     public static final String KEY_PRICE = "price";
@@ -43,6 +46,7 @@ public class MainActivity_Detail extends AppCompatActivity implements View.OnCli
     public static final int IMAGES = 0;
     private String name_, dimention_;
     private int price_, price2_, images_;
+    int orderPrice = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +83,7 @@ public class MainActivity_Detail extends AppCompatActivity implements View.OnCli
             public void onClick(View view) {
                 quantity++;
                 displayQuantity();
-                int orderPrice = price_ * quantity;
+                orderPrice = price_ * quantity;
                 String setTotal = NumberFormat.getInstance().format(orderPrice);
                 total_price_detail.setText("Rp " + setTotal + ",-");
             }
@@ -94,7 +98,7 @@ public class MainActivity_Detail extends AppCompatActivity implements View.OnCli
                 } else {
                     quantity--;
                     displayQuantity();
-                    int orderPrice = price_ * quantity;
+                    orderPrice = price_ * quantity;
                     String setTotal = NumberFormat.getInstance().format(orderPrice);
                     total_price_detail.setText("Rp " + setTotal + ",-");
                 }
@@ -127,7 +131,7 @@ public class MainActivity_Detail extends AppCompatActivity implements View.OnCli
     private boolean Savecart() {
 
         String name = name_detail.getText().toString();
-        String price = total_price_detail.getText().toString();
+        String price = String.valueOf(orderPrice);
         String quantity = quantity_number.getText().toString();
 
         ContentValues values = new ContentValues();
@@ -142,7 +146,7 @@ public class MainActivity_Detail extends AppCompatActivity implements View.OnCli
             if (newUri == null) {
                 Toast.makeText(this, "Failed to add to cart", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, "Success to add to cart", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Success to add to cart", Toast.LENGTH_SHORT).show();
             }
         }
         hasAllRequiredValues = true;
@@ -174,6 +178,7 @@ public class MainActivity_Detail extends AppCompatActivity implements View.OnCli
             return;
         }
         if (cursor.moveToFirst()) {
+            int id = cursor.getColumnIndex(orderContract.orderEntity._ID);
             int name = cursor.getColumnIndex(orderContract.orderEntity.COLUMN_NAME);
             int price = cursor.getColumnIndex(orderContract.orderEntity.COLUMN_PRICE);
             int quantity = cursor.getColumnIndex(orderContract.orderEntity.COLUMN_QUANTITY);
@@ -182,6 +187,13 @@ public class MainActivity_Detail extends AppCompatActivity implements View.OnCli
             String nameOrder = cursor.getString(name);
             String priceOrder = cursor.getString(price);
             String quantityOrder = cursor.getString(quantity);
+
+            items2.add(new Checkout(cursor.getString(id),
+                    nameOrder,
+                    quantity,
+                    price,
+                    0
+            ));
 
             name_detail.setText(nameOrder);
             total_price_detail.setText(priceOrder);

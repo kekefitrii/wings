@@ -3,10 +3,13 @@ package com.ike.wingsshop.Database;
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+
+import com.ike.wingsshop.MainActivity_Checkout;
 
 
 public class orderProvider extends ContentProvider {
@@ -118,5 +121,22 @@ public class orderProvider extends ContentProvider {
     @Override
     public int update(Uri uri, ContentValues contentValues, String s, String[] strings) {
         return 0;
+    }
+    public String getSum(){
+
+        SQLiteDatabase database = mHelper.getWritableDatabase();
+        String amount;
+        String quary = "SELECT SUM(" + orderContract.orderEntity.COLUMN_PRICE + ") FROM " + orderContract.orderEntity.TABLE_NAME;
+        Cursor cursor = database.rawQuery(quary, null);
+        if(cursor.moveToFirst()){
+            amount = String.valueOf(cursor.getInt(0));
+        } else {
+            amount = "0";
+        }
+        cursor.close();
+        database.close();
+        return amount;
+
+
     }
 }
