@@ -50,6 +50,11 @@ public class MainActivity_Checkout extends AppCompatActivity implements LoaderMa
         tv_total = findViewById(R.id.tv_totalgrand);
         tv_total.setText("Rp 0,-");
 
+        mHelper = new orderHelper(this);
+        SQLiteDatabase database = mHelper.getWritableDatabase();
+
+//        tv_total.setText(String.format("Rp %s", mHelper.getSum(database)));
+
         LocalBroadcastManager.getInstance(this)
                 .registerReceiver(mBroadcast, new IntentFilter("MyTotal"));
 
@@ -128,7 +133,6 @@ public class MainActivity_Checkout extends AppCompatActivity implements LoaderMa
                         dialog.cancel();
                     }
                 });
-
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
@@ -136,7 +140,6 @@ public class MainActivity_Checkout extends AppCompatActivity implements LoaderMa
     private void showNotif() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                 this);
-
         alertDialogBuilder.setTitle("Success");
         alertDialogBuilder
                 .setMessage("Terima kasih telah berbelanja")
@@ -144,8 +147,9 @@ public class MainActivity_Checkout extends AppCompatActivity implements LoaderMa
                 .setCancelable(false)
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+
                         int confirmOrder = getContentResolver().delete(orderContract.orderEntity.CONTENT_URI, null, null);
-                        SQLiteDatabase database = mHelper.getWritableDatabase();
+//                        SQLiteDatabase database = mHelper.getWritableDatabase();
 
                         tv_total.setText("Rp 0,-");
                         finish();
@@ -154,7 +158,6 @@ public class MainActivity_Checkout extends AppCompatActivity implements LoaderMa
                         startActivity(i);
                     }
                 });
-
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
